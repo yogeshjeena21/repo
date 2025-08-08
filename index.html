@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yogesh Jeena | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- Particles.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0b1624;
+      color: #222;
+      line-height: 1.6;
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Particle background container */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      z-index: 0;
+      background: #0b1624;
+    }
+
+    /* Headings styling */
+    h1, h2, h3 {
+      color: #00e0ff; /* Bright cyan */
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to right, #004d99, #0073e6);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .profile-photo {
+      width: 220px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .profile-photo:hover {
+      transform: scale(1.05);
+    }
+    .header-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .header-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .header-content p {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: #d6eaff;
+    }
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.8rem;
+      background: #0073e6;
+      color: white;
+      font-weight: 600;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 115, 230, 0.5);
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1rem;
+      gap: 8px;
+      width: max-content;
+    }
+    .resume-btn:hover {
+      background-color: #004d99;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 77, 153, 0.7);
+    }
+    .resume-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+      transition: transform 0.3s ease;
+    }
+    .resume-btn:hover svg {
+      transform: translateY(-3px);
+    }
+
+    /* Layout: sidebar + content */
+    .main-container {
+      display: flex;
+      gap: 2rem;
+      min-height: 500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left vertical nav */
+    nav.sidebar {
+      flex-shrink: 0;
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    nav.sidebar button {
+      background: #0073e6;
+      border: none;
+      color: white;
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 115, 230, 0.5);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+      text-align: center;
+    }
+    nav.sidebar button:hover {
+      background-color: #004d99;
+      transform: scale(1.05);
+    }
+    nav.sidebar button.active {
+      background-color: #004d99;
+      box-shadow: 0 6px 20px rgba(0, 77, 153, 0.8);
+      cursor: default;
+      transform: scale(1.1);
+    }
+
+    /* Content sections */
+    section.content-section {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    section.content-section.active {
+      display: block;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 1rem;
+    }
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+    a {
+      color: #0073e6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .icon {
+      width: 20px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 250px;
+      height: auto;
+      border-radius: 10px;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Certificates Gallery */
+    .certificates-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .certificate-item {
+      width: 180px;
+      text-align: center;
+      background: #f9fbff;
+      border: 1px solid #d0e2ff;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,115,230,0.15);
+      transition: box-shadow 0.3s ease;
+    }
+    .certificate-item:hover {
+      box-shadow: 0 6px 15px rgba(0,115,230,0.3);
+    }
+    .certificate-item img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      user-select: none;
+      cursor: pointer;
+    }
+    .certificate-item p {
+      font-size: 0.9rem;
+      color: #004d99;
+      margin: 0;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #004d99;
+      color: white;
+      margin-top: 2rem;
+      border-radius: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Image Modal */
+    #imageModal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 10000;
+      padding-top: 50px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.85);
+      cursor: pointer;
+    }
+    #imageModal img {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+      animation: zoomIn 0.3s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00e0ff;
+      cursor: default;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    #imageModal span {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
+    }
+    #imageModal span:hover {
+      color: #00e0ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .profile-photo {
+        width: 180px;
+        margin-bottom: 1.5rem;
+      }
+      .header-content h1 {
+        font-size: 2.5rem;
+      }
+      .header-content p {
+        font-size: 1.2rem;
+        color: #d6eaff;
+      }
+      .main-container {
+        flex-direction: column;
+      }
+      nav.sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+      }
+      nav.sidebar button {
+        flex: 1 1 120px;
+        font-size: 1rem;
+        padding: 0.65rem 1rem;
+        border-radius: 25px;
+      }
+      section.content-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle background -->
+  <div id="particles-js"></div>
+
+  <header>
+    <img
+      src="profile.jpg"
+      alt="Yogesh Jeena"
+      class="profile-photo"
+      data-aos="zoom-in"
+      data-aos-duration="1200"
+      tabindex="0"
+      aria-label="Profile photo of Yogesh Jeena, click to enlarge"
+    />
+
+    <div class="header-content">
+      <h1 data-aos="fade-down" data-aos-duration="1000">Yogesh Jeena</h1>
+      <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        ECE Undergrad | Embedded & Hardware Enthusiast
+      </p>
+
+      <a
+        href="Yogesh_Jeena_Resume.pdf"
+        target="_blank"
+        rel="noopener"
+        class="resume-btn"
+        data-aos="fade-up"
+        data-aos-delay="400"
+        data-aos-duration="1000"
+        aria-label="Download Resume"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M5 20h14v-2H5v2zm7-18L5.33 11h3.84v6h6.66v-6h3.84L12 2z"
+          />
+        </svg>
+        Download Resume
+      </a>
+    </div>
+  </header>
+
+  <div class="main-container" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+    <!-- Vertical Navigation -->
+    <nav class="sidebar" role="tablist" aria-label="Portfolio Sections">
+      <button role="tab" aria-selected="true" aria-controls="about" id="tab-about" class="active">About</button>
+      <button role="tab" aria-selected="false" aria-controls="education" id="tab-education">Education</button>
+      <button role="tab" aria-selected="false" aria-controls="skills" id="tab-skills">Skills</button>
+      <button role="tab" aria-selected="false" aria-controls="certifications" id="tab-certifications">Certifications</button>
+      <button role="tab" aria-selected="false" aria-controls="projects" id="tab-projects">Projects</button>
+      <button role="tab" aria-selected="false" aria-controls="gallery" id="tab-gallery">Gallery</button>
+      <button role="tab" aria-selected="false" aria-controls="contact" id="tab-contact">Contact</button>
+    </nav>
+
+    <!-- Content Sections -->
+    <section id="about" class="content-section active" role="tabpanel" aria-labelledby="tab-about" tabindex="0">
+      <h2>About Me</h2>
+      <p>
+        I am an Electronics and Communication Engineering undergraduate with a strong foundation in embedded systems and hardware design. During my internship at Aries Nainital, I gained practical experience in circuit testing, PCB design, and device troubleshooting. I am passionate about developing IoT solutions and automation systems that address real-world challenges.
+      </p>
+    </section>
+
+    <section id="education" class="content-section" role="tabpanel" aria-labelledby="tab-education" tabindex="0">
+      <h2>Education</h2>
+      <ul>
+        <li><strong>B.Tech in Electronics and Communication Engineering</strong> — BTKIT Dwarahat (2023–2027), currently maintaining a 70% average, focusing on embedded systems and digital electronics.</li>
+        <li><strong>12th Board (PCM)</strong> — Bhartiya Shaheed Sainik Vidyalaya (2022–2023), scored 83.4%, building a strong foundation in physics, chemistry, and mathematics.</li>
+        <li><strong>10th Board</strong> — St. Anthony Convent School (2020–2021), scored 81.2% with excellent academic performance.</li>
+      </ul>
+    </section>
+
+    <section id="skills" class="content-section" role="tabpanel" aria-labelledby="tab-skills" tabindex="0">
+      <h2>Skills</h2>
+      <ul>
+        <li><strong>Programming Languages:</strong> Proficient in C++, C, Python, and MATLAB for embedded and simulation projects.</li>
+        <li><strong>Tools & Platforms:</strong> Experienced with Arduino microcontrollers, TinkerCAD simulations, PCB design using DipTrace, LabVIEW applications, and GitHub for version control.</li>
+        <li><strong>Soft Skills:</strong> Strong teamwork, leadership experience in academic projects, and effective problem-solving abilities.</li>
+      </ul>
+    </section>
+
+    <section id="certifications" class="content-section" role="tabpanel" aria-labelledby="tab-certifications" tabindex="0">
+      <h2>Certifications & Training</h2>
+      <ul>
+        <li><strong>PCB Design with DipTrace</strong> — Completed hands-on training in designing and simulating printed circuit boards.</li>
+        <li><strong>MATLAB Onramp</strong> — Gained fundamental skills in MATLAB programming and numerical computing.</li>
+        <li><strong>Arduino Workshop</strong> — Practical workshop covering Arduino basics and embedded system programming.</li>
+        <li><strong>Arduino Development (Udemy)</strong> — Comprehensive online course focused on Arduino application development.</li>
+      </ul>
+
+      <div class="certificates-gallery" aria-label="Certificates Gallery">
+        <div class="certificate-item" aria-label="PCB Design Certificate">
+          <img src="pcb design certificate.jpg" alt="PCB Design Certificate" />
+          <p>PCB Design Certificate</p>
+        </div>
+        <div class="certificate-item" aria-label="MATLAB Onramp Certificate">
+          <img src="onramp matlab certificate.jpg" alt="MATLAB Onramp Certificate" />
+          <p>MATLAB Onramp Certificate</p>
+        </div>
+        <div class="certificate-item" aria-label="Arduino Workshop Certificate">
+          <img src="workshop adrino.jpeg" alt="Arduino Workshop Certificate" />
+          <p>Arduino Workshop Certificate</p>
+        </div>
+        <div class="certificate-item" aria-label="Arduino Development Certificate">
+          <img src="udemy adrino.jpeg" alt="Arduino Development Certificate" />
+          <p>Arduino Development Certificate</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="content-section" role="tabpanel" aria-labelledby="tab-projects" tabindex="0">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Temperature Sensing System (LabVIEW):</strong> Developed an intuitive system to monitor and display temperature readings in real-time.</li>
+        <li><strong>USB Power Circuit Simulation (DipTrace):</strong> Designed and simulated an efficient USB power supply circuit for small electronic devices.</li>
+        <li><strong>Fahrenheit to Celsius Converter (LabVIEW):</strong> Created a user-friendly temperature conversion tool as part of embedded system training.</li>
+        <li><strong>LCD Display (TinkerCAD):</strong> Programmed and simulated LCD interfacing with microcontrollers for dynamic data display.</li>
+        <li><strong>Servo Motor Control (TinkerCAD):</strong> Developed a servo motor control project using Arduino simulation to demonstrate precision motion control.</li>
+      </ul>
+    </section>
+
+    <section id="gallery" class="content-section" role="tabpanel" aria-labelledby="tab-gallery" tabindex="0">
+      <h2>Project Gallery</h2>
+      <div class="gallery">
+        <img src="project1.png" alt="Temperature Sensing System Project" tabindex="0" />
+        <img src="project2.png" alt="USB Power Circuit Simulation Project" tabindex="0" />
+        <img src="project3.png" alt="Fahrenheit to Celsius Converter Project" tabindex="0" />
+        <img src="project4.png" alt="LCD Display Project" tabindex="0" />
+        <img src="project5.png" alt="Servo Motor Project" tabindex="0" />
+      </div>
+    </section>
+
+    <section id="contact" class="content-section" role="tabpanel" aria-labelledby="tab-contact" tabindex="0">
+      <h2>Contact</h2>
+      <p><strong>Phone:</strong> +91 95369 13335</p>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:yogeshjeena271@gmail.com">yogeshjeena271@gmail.com</a>
+      </p>
+      <p><strong>Location:</strong> Jeolikote, Nainital, Uttarakhand</p>
+      <p>
+        <strong>LinkedIn:</strong>
+        <a
+          href="https://www.linkedin.com/in/yogesh-jeena-2091892ab"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+            class="icon"
+            alt="LinkedIn"
+          />linkedin.com/in/yogesh-jeena-2091892ab</a
+        >
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Yogesh Jeena</p>
+  </footer>
+
+  <!-- Image Modal -->
+  <div id="imageModal" role="dialog" aria-modal="true" aria-labelledby="modalImgAlt">
+    <span id="closeModal" aria-label="Close Image">&times;</span>
+    <img id="modalImg" src="" alt="" />
+  </div>
+
+  <script>
+    AOS.init({ once: true });
+
+    // Sidebar tab switching
+    const tabs = document.querySelectorAll('nav.sidebar button');
+    const sections = document.querySelectorAll('section.content-section');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        sections.forEach(sec => {
+          sec.classList.remove('active');
+          sec.setAttribute('hidden', 'true');
+        });
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        const activeSection = document.getElementById(tab.getAttribute('aria-controls'));
+        activeSection.classList.add('active');
+        activeSection.removeAttribute('hidden');
+        activeSection.focus();
+      });
+    });
+
+    // Initialize particles.js
+    particlesJS('particles-js',
+      {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": { "enable": true, "value_area": 800 }
+          },
+          "color": { "value": "#00e0ff" },
+          "shape": {
+            "type": "circle",
+            "stroke": { "width": 0, "color": "#000000" },
+            "polygon": { "nb_sides": 5 }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": true,
+            "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": { "enable": true, "speed": 5, "size_min": 0.3, "sync": false }
+          },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#00e0ff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "bounce",
+            "bounce": true,
+            "attract": { "enable": false }
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": { "enable": true, "mode": "grab" },
+            "onclick": { "enable": true, "mode": "push" },
+            "resize": true
+          },
+          "modes": {
+            "grab": { "distance": 140, "line_linked": { "opacity": 1 } },
+            "push": { "particles_nb": 4 }
+          }
+        },
+        "retina_detect": true
+      }
+    );
+
+    // Image zoom on click
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    const closeModal = document.getElementById("closeModal");
+
+    document.querySelectorAll("img").forEach(img => {
+      img.style.cursor = "pointer";
+      img.addEventListener("click", () => {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        modalImg.setAttribute("aria-label", img.alt || "Enlarged image");
+      });
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+      modalImg.src = "";
+      modalImg.alt = "";
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        modalImg.src = "";
+        modalImg.alt = "";
+      }
+    });
+  </script>
+</body>
+</html>       
